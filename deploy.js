@@ -19,7 +19,13 @@ async function main() {
   const contract = await contractFactory.deploy();
   const deploymentReceipt = await contract.deployTransaction.wait(1);
 
-  console.log(deploymentReceipt);
+  let currentFavoriteNumber = await contract.retrieve();
+  console.log(`Current Favorite Number: ${currentFavoriteNumber}`);
+
+  let transactionResponse = await contract.store("7");
+  let transactionReceipt = await transactionResponse.wait();
+  currentFavoriteNumber = await contract.retrieve();
+  console.log(`New Favorite Number: ${currentFavoriteNumber}`);
 }
 
 main();
